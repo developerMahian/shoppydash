@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 const StateContext = createContext();
 
@@ -7,31 +7,72 @@ const initialState = {
   cart: false,
   userProfile: false,
   notification: false,
+  themeSettings: false,
 };
 
 export const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined);
-  const [currentColor, setCurrentColor] = useState('#03C9D7');
-  const [currentMode, setCurrentMode] = useState('Light');
-  const [themeSettings, setThemeSettings] = useState(false);
+  const [currentColor, setCurrentColor] = useState("#03C9D7");
+  const [currentMode, setCurrentMode] = useState("Light");
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
+  useEffect(() => {
+    window.addEventListener("mousedown", outsideClick);
+    return () => window.removeEventListener("mousedown", outsideClick);
+  }, []);
+
+  const outsideClick = (e) => {
+    const popUpBtns = [
+      "themeSettings",
+      "cart",
+      "chat",
+      "notification",
+      "userProfile",
+    ].map((id) => document.getElementById(id));
+
+    for (let i = 0; i < popUpBtns.length; i++) {
+      if (popUpBtns[i]?.contains(e.target)) return;
+    }
+
+    for (let i = 0; i < popUpBtns.length; i++) {
+      if (!popUpBtns[i]?.contains(e.target)) setIsClicked(initialState);
+    }
+  };
+
   const setMode = (e) => {
     setCurrentMode(e.target.value);
-    localStorage.setItem('themeMode', e.target.value);
+    localStorage.setItem("themeMode", e.target.value);
   };
 
   const setColor = (color) => {
     setCurrentColor(color);
-    localStorage.setItem('colorMode', color);
+    localStorage.setItem("colorMode", color);
   };
 
-  const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true });
+  const handleClick = (clicked) => {
+    setIsClicked({ ...initialState, [clicked]: true });
+  };
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <StateContext.Provider value={{ currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings }}>
+    <StateContext.Provider
+      value={{
+        currentColor,
+        currentMode,
+        activeMenu,
+        screenSize,
+        setScreenSize,
+        handleClick,
+        isClicked,
+        initialState,
+        setIsClicked,
+        setActiveMenu,
+        setCurrentColor,
+        setCurrentMode,
+        setMode,
+        setColor,
+      }}
+    >
       {children}
     </StateContext.Provider>
   );
