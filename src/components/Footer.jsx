@@ -1,5 +1,9 @@
-import { FaArrowCircleUp, FaGithubAlt, FaTwitter } from "react-icons/fa";
-import Fiverr from "../data/svgAssets/Fiverr";
+import {
+  FaArrowCircleUp,
+  FaGithubAlt,
+  FaSkype,
+  FaTwitter,
+} from "react-icons/fa";
 
 const Footer = () => (
   <footer className="h-48 overflow-hidden relative mt-32">
@@ -11,17 +15,18 @@ const Footer = () => (
           rel="noreferrer"
         >
           <FaTwitter
-            className={socialIconsClass + " text-sky-500 dark:text-sky-400"}
+            className={socialIconsClass + " text-blue-500 dark:text-blue-400"}
           />
         </a>
 
         <a
-          href="https://www.fiverr.com/dev_mahian"
+          href="https://join.skype.com/invite/wecW1GItckDh"
           target="_blank"
           rel="noreferrer"
-          className="animate-bounce"
         >
-          <Fiverr />
+          <FaSkype
+            className={`${socialIconsClass} text-sky-500 animate-bounce`}
+          />
         </a>
 
         <a
@@ -36,7 +41,7 @@ const Footer = () => (
       <section className="text-gray-500 text-xs tracking-wide text-center font-mono font-semibold mb-3.5 z-10">
         Copyright © 2022, All Right Reserved by{" "}
         <a
-          href="https://www.fiverr.com/dev_mahian"
+          href="https://join.skype.com/invite/wecW1GItckDh"
           target="_blank"
           rel="noreferrer"
           className="inline-block text-red-500 hover:text-red-600 hover:scale-105 transition-all duration-300"
